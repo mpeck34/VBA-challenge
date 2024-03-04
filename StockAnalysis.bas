@@ -1,5 +1,5 @@
 Attribute VB_Name = "StockAnalysis"
-'Start here
+' Start here
 ' Cycle through worksheets
 Sub forEachWs()
     Dim ws As Worksheet
@@ -23,7 +23,7 @@ Sub StockAnalysis(ws As Worksheet)
     MsgBox ("Worksheet Title " & ws.Name)
     MsgBox ("Rows of data " & LastRow)
     
-    ' Create new column titles
+    ' Create new column titles for results
     ws.Range("I1").Value = "Ticker"
     ws.Range("J1").Value = "Yearly Change"
     ws.Range("K1").Value = "Percent Change"
@@ -36,62 +36,63 @@ Sub StockAnalysis(ws As Worksheet)
     tickerSymbol = ws.Range("A2").Value
     tickerCounter = 2
     
-    ' Add first ticker for same reason
+    ' Add first ticker to results column for same reason
     ws.Range("I2").Value = tickerSymbol
 
     ' Loop to get open and close and volume values
-    ' then put the data into the new columns
+    ' then put the data into the new results columns
     For I = 2 To LastRow
     
-        ' If next line doesn't equal last
+        ' If next line doesn't equal last ticker
         If ws.Cells(I, 1).Value <> ws.Cells(I + 1, 1).Value Then
-        
+
+            ' Get the final value for the time period, ie final close value
             stockClose = ws.Cells(I, 6)
                         
-            ' Add data to new columns according to tickerCounter
-            ' Yearly
+            ' Add result data to new columns according to tickerCounter
+            ' This is the total change result
             ws.Cells(tickerCounter, 10).Value = stockClose - stockOpen
             
-            ' Change colour based on performance
+            ' Change cell colour based on performance
             If ws.Cells(tickerCounter, 10).Value > 0 Then
                 ws.Cells(tickerCounter, 10).Interior.ColorIndex = 4
             ElseIf ws.Cells(tickerCounter, 10).Value <= 0 Then
                 ws.Cells(tickerCounter, 10).Interior.ColorIndex = 3
             End If
             
-            ' Percent
+            ' Percent change result calculated and cell formatted
             ws.Cells(tickerCounter, 11).NumberFormat = "0.00%"
             ws.Cells(tickerCounter, 11).Value = (stockClose / stockOpen) - 1
             
-            ' Volume and reset
+            ' Volume calculated, displayed and variable reset
             stockVolume = stockVolume + ws.Cells(I, 7).Value
             ws.Cells(tickerCounter, 12).Value = stockVolume
             stockVolume = 0
 
-            ' now get new stockOpen and ticker, add ticker to new column
+            ' Get new stockOpen and ticker, add ticker to new results column
             stockOpen = ws.Cells(I + 1, 3).Value
             tickerSymbol = ws.Cells(I + 1, 1).Value
             tickerCounter = tickerCounter + 1
             ws.Cells(tickerCounter, 9).Value = tickerSymbol
-            
+
+        ' When the next line is the same ticker, add up stock volume
         Else
-            ' Add volume
             stockVolume = stockVolume + ws.Cells(I, 7).Value
             
         End If
     Next I
 End Sub
 
-'Bonus round
+' Bonus round
 Sub Bonus(ws As Worksheet)
 
     MsgBox ("Calculating bonus section")
     
-    ' Make new column titles
+    ' Make new result column titles yet again
     ws.Range("P1").Value = "Ticker"
     ws.Range("Q1").Value = "Value"
     
-    ' Make new row titles
+    ' Make new result row titles
     ws.Range("O2").Value = "Greatest % Increase"
     ws.Range("O3").Value = "Greatest % Decrease"
     ws.Range("O4").Value = "Greatest Total Volume"
@@ -100,7 +101,7 @@ Sub Bonus(ws As Worksheet)
     Dim greatestIncrease As Double, greatestDecrease As Double, greatestTotal As Variant
     Dim increaseTicker As String, decreaseTicker As String, totalTicker As String
     
-    ' Last row of new columns
+    ' Last row of new columns ready for looping
     LastRow = ws.Cells(Rows.Count, 9).End(xlUp).Row
     
     ' Set initial values
