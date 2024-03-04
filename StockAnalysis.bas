@@ -18,8 +18,11 @@ Sub StockAnalysis(ws As Worksheet)
     Dim stockOpen As Double, stockClose As Double, stockVolume As Variant
     Dim stockPercentage As Double, stockPercentChange As Double
     Dim tickerCounter As Long
-    
+
+    ' Get last row for looping
     LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+    ' Quick display to assure user that sheets are accessing properly
     MsgBox ("Worksheet Title " & ws.Name)
     MsgBox ("Rows of data " & LastRow)
     
