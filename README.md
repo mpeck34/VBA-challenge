@@ -1,8 +1,10 @@
 == Monash Boot Camp Week 2 Challenge ==
 
-Contributors: Mark Peck, EDX
+Contributors: Mark Peck, EDX, stackoverflow
 
-Links: https://www.edx.org/
+Links:
+https://www.edx.org/
+https://stackoverflow.com/questions/21918166/excel-vba-for-each-worksheet-loop
 
 
 == Basic Instructions ==
