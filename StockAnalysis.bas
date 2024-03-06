@@ -1,6 +1,7 @@
 Attribute VB_Name = "StockAnalysis"
 ' Start here
 ' Cycle through worksheets
+' This code was provided through: https://stackoverflow.com/questions/21918166/excel-vba-for-each-worksheet-loop
 Sub forEachWs()
     Dim ws As Worksheet
     For Each ws In ActiveWorkbook.Worksheets
